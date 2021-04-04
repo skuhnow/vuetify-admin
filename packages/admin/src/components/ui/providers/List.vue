@@ -25,7 +25,7 @@
           <va-bulk-delete-button></va-bulk-delete-button>
         </div>
       </v-toolbar>
-      <v-toolbar flat v-else>
+      <v-toolbar flat height="auto" v-else>
         <form
           class="d-flex align-center"
           v-if="association"
