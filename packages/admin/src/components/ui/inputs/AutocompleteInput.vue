@@ -57,11 +57,20 @@ export default {
      * Enable taggable mode. Transform autocomplete into combobox.
      */
     taggable: Boolean,
+    initialLoad: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
       search: null,
     };
+  },
+  created() {
+    if (this.initialLoad) {
+      this.loadList();
+    }
   },
   methods: {
     async loadCurrentChoices(value) {
@@ -70,6 +79,12 @@ export default {
           this.multiple ? value : [value]
         );
       }
+    },
+    async loadList(val = null) {
+      this.items = [
+        ...(this.items || []),
+        ...((await this.fetchChoices(val)) || []),
+      ];
     },
   },
   watch: {
@@ -90,10 +105,7 @@ export default {
         return;
       }
 
-      this.items = [
-        ...(this.items || []),
-        ...((await this.fetchChoices(val)) || []),
-      ];
+      await this.loadList(val);
     },
   },
 };
