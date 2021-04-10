@@ -4,6 +4,7 @@
     v-bind="commonProps"
     auto-grow
     :filled="filled"
+    :disabled="disabled"
     @change="change"
     @input="update"
   ></v-textarea>
@@ -11,6 +12,7 @@
     v-else
     v-bind="commonProps"
     :filled="filled"
+    :disabled="disabled"
     @change="change"
     @input="update"
     :type="type"
@@ -19,6 +21,7 @@
 
 <script>
 import Input from "../../../mixins/input";
+import Disabled from "../../../mixins/disabled";
 import Editable from "../../../mixins/editable";
 
 /**
@@ -28,7 +31,7 @@ import Editable from "../../../mixins/editable";
  * Render will depend of browser support.
  */
 export default {
-  mixins: [Input, Editable],
+  mixins: [Input, Editable, Disabled],
   props: {
     /**
      * Text to be edited.

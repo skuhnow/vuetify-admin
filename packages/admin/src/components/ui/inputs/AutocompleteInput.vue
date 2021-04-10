@@ -1,6 +1,7 @@
 <template>
   <component
     :is="taggable ? 'v-combobox' : 'v-autocomplete'"
+    :disabled="disabled"
     v-bind="commonProps"
     :filled="filled"
     :multiple="multiple"
@@ -28,6 +29,7 @@
 <script>
 import Input from "../../../mixins/input";
 import Multiple from "../../../mixins/multiple";
+import Disabled from "../../../mixins/disabled";
 import ReferenceInput from "../../../mixins/reference-input";
 
 /**
@@ -35,7 +37,7 @@ import ReferenceInput from "../../../mixins/reference-input";
  * Allows searching of linked resources from your API.
  */
 export default {
-  mixins: [Input, Multiple, ReferenceInput],
+  mixins: [Input, Multiple, ReferenceInput, Disabled],
   props: {
     /**
      * Minimum characters to tap before search query launch.
