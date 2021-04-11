@@ -73,7 +73,11 @@ export default {
       });
     },
     add() {
-      this.input.push({ id: Math.max(...this.input.map((o) => o.id)) + 1 });
+      let element = { id: 1 };
+      if (this.input.length > 0) {
+        element = { id: Math.max(...this.input.map(o => o.id)) + 1 };
+      }
+      this.input.push(element);
       this.update(this.input);
     },
     remove(index) {
