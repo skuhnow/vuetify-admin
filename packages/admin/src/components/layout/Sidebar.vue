@@ -37,7 +37,7 @@
             </v-list-item-content>
           </template>
           <v-list-item
-            v-for="(child, i) in item.children"
+            v-for="(child, i) in activeChildrens(item.children)"
             :key="i"
             link
             :to="child.link"
@@ -99,6 +99,11 @@ export default {
      * Control visibility
      */
     value: null,
+  },
+  methods: {
+    activeChildrens(childrens) {
+      return childrens.filter((children) => !!children);
+    },
   },
 };
 </script>
