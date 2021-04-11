@@ -13,6 +13,7 @@
         exact
         :type="type"
         :loading="loading"
+        :disabled="disabled"
       >
         <v-icon small>{{ icon }}</v-icon>
         <span v-if="!hideLabel && $vuetify.breakpoint.lgAndUp" class="ml-2">
@@ -26,12 +27,13 @@
 
 <script>
 import ActionButton from "../../../mixins/action-button";
+import Disabled from "../../../mixins/disabled";
 
 /**
  * Component tu use for any custom action button. Can be used on data table rows or top header of create, show and edit pages.
  */
 export default {
-  mixins: [ActionButton],
+  mixins: [ActionButton, Disabled],
   props: {
     /**
      * Set the button's type attribute.
