@@ -40,6 +40,7 @@
             v-for="(child, i) in activeChildrens(item.children)"
             :key="i"
             link
+            class="pl-8"
             :to="child.link"
           >
             <v-list-item-action v-if="child.icon">
