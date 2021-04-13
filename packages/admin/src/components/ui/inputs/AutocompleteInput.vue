@@ -75,9 +75,7 @@ export default {
   methods: {
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.items = await this.fetchCurrentChoices(
-          this.multiple ? value : [value]
-        );
+        await this.loadList();
       }
     },
     async loadList(val = null) {
