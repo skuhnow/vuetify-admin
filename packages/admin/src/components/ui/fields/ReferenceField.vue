@@ -84,7 +84,7 @@ export default {
           return;
         }
 
-        if (this.fetch) {
+        if (this.fetch && newVal) {
           this.loading = true;
           let { data } = await this.$store.dispatch(
             `${this.reference}/getOne`,
