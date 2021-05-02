@@ -66,13 +66,11 @@ export default {
       if (!value) {
         return value;
       }
-      let input = this.multiple
+      return this.multiple
         ? value.map((v) => v[this.getItemValue] || v)
         : value[this.getItemValue] || value;
-
-      return input;
     },
-    async fetchChoices(search = null) {
+    async fetchChoices(search = null, itemsPerPage = this.itemsPerPage) {
       if (!this.reference || this.loading) {
         return;
       }
@@ -89,7 +87,7 @@ export default {
         include: this.include,
         pagination: {
           page: 1,
-          perPage: this.itemsPerPage,
+          perPage: itemsPerPage,
         },
         sort: this.sortBy.map((by, index) => {
           return { by, desc: this.sortDesc[index] };

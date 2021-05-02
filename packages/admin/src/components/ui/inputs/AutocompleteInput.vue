@@ -31,6 +31,7 @@ import Input from "../../../mixins/input";
 import Multiple from "../../../mixins/multiple";
 import Disabled from "../../../mixins/disabled";
 import ReferenceInput from "../../../mixins/reference-input";
+import get from "lodash/get";
 
 /**
  * Value editing from a searchable choices. Support multiple and references.
@@ -61,6 +62,12 @@ export default {
       type: Boolean,
       default: true,
     },
+    itemsPerPage: {
+      type: Number,
+      default() {
+        return get(this.$admin.options, "autoComplete.itemsPerPage") || 999;
+      },
+    },
   },
   data() {
     return {
@@ -81,7 +88,7 @@ export default {
     async loadList(val = null) {
       this.items = [
         ...(this.items || []),
-        ...((await this.fetchChoices(val)) || []),
+        ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
       ];
     },
   },
