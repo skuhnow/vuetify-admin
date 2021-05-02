@@ -65,7 +65,7 @@ export default {
     itemsPerPage: {
       type: Number,
       default() {
-        return get(this.$admin.options, "autoComplete.itemsPerPage") || 999;
+        return get(this.$admin.options, "autoComplete.itemsPerPage") || 50;
       },
     },
   },
@@ -82,6 +82,9 @@ export default {
   methods: {
     async loadCurrentChoices(value) {
       if (this.reference && value) {
+        this.items = await this.fetchCurrentChoices(
+          this.multiple ? value : [value]
+        );
         await this.loadList();
       }
     },
