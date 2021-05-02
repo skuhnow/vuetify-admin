@@ -4,6 +4,7 @@
     :column="column"
     :row="row"
     @change="update"
+    persistent-hint
   >
     <v-radio v-if="clearable" :label="$t('va.forms.none')"></v-radio>
     <v-radio

@@ -7,6 +7,7 @@
     @click:append="show = !show"
     @change="change"
     @input="update"
+    persistent-hint
   ></v-text-field>
 </template>
 

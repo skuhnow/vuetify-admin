@@ -7,6 +7,7 @@
     :disabled="disabled"
     @change="change"
     @input="update"
+    persistent-hint
   ></v-textarea>
   <v-text-field
     v-else
@@ -16,6 +17,7 @@
     @change="change"
     @input="update"
     :type="type"
+    persistent-hint
   ></v-text-field>
 </template>
 

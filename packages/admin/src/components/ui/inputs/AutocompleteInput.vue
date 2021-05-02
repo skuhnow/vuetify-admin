@@ -14,6 +14,7 @@
     :search-input.sync="search"
     @change="change"
     @input="update"
+    persistent-hint
   >
     <template v-slot:selection="data" v-if="$scopedSlots.selection">
       <!-- @slot Define a custom selection appearance -->

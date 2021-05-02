@@ -8,6 +8,7 @@
     :max="max"
     @change="change"
     @input="update"
+    persistent-hint
   ></v-text-field>
 </template>
 

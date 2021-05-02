@@ -5,6 +5,7 @@
     :input-value="input"
     v-bind="commonProps"
     @change="changeState"
+    persistent-hint
   ></v-switch>
 </template>
 

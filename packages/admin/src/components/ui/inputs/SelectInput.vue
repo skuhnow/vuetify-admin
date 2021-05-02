@@ -10,6 +10,7 @@
     :items="items || choices"
     @change="change"
     @input="update"
+    persistent-hint
   >
   </v-select>
 </template>
