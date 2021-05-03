@@ -22,7 +22,9 @@
         <div>
           <!-- @slot Custom bulk actions, ideal place for VaBulkActionButton. -->
           <slot name="bulk.actions"></slot>
-          <va-bulk-delete-button></va-bulk-delete-button>
+          <slot name="bulk.delete">
+            <va-bulk-delete-button></va-bulk-delete-button>
+          </slot>
         </div>
       </v-toolbar>
       <v-toolbar flat height="auto" v-else>
