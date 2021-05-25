@@ -12,11 +12,13 @@
         <v-text-field
           :value="dateFormatted"
           v-bind="commonProps"
+          :disabled="disabled"
           readonly
           append-icon="mdi-calendar"
           v-on="on"
           :filled="filled"
           @click:clear="input = null"
+          persistent-hint
         ></v-text-field>
       </template>
       <v-date-picker
@@ -31,13 +33,14 @@
 <script>
 import Input from "../../../mixins/input";
 import Editable from "../../../mixins/editable";
+import Disabled from "../../../mixins/disabled";
 
 /**
  * Use for date type value editing. Is composed of a readonly textfield associated to a vuetify datepicker.
  * Do not support time, use classic VaTextInput in that case.
  */
 export default {
-  mixins: [Input, Editable],
+  mixins: [Input, Editable, Disabled],
   props: {
     /**
      * Date on ISO format to be edited.
