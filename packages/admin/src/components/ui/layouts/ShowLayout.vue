@@ -1,12 +1,25 @@
 <template>
   <va-action-page :title="title">
     <template slot="actions">
-      <va-list-button :resource="resource" :item="item"></va-list-button>
-      <va-edit-button :resource="resource" :item="item"></va-edit-button>
+      <va-list-button
+        v-if="!disableList"
+        :resource="resource"
+        :item="item"
+      ></va-list-button>
+      <va-edit-button
+        v-if="!disableEdit"
+        :resource="resource"
+        :item="item"
+      ></va-edit-button>
       <!-- @slot Additional custom action buttons placeholder. -->
       <slot name="actions"></slot>
-      <va-clone-button :resource="resource" :item="item"></va-clone-button>
+      <va-clone-button
+        v-if="!disableClone"
+        :resource="resource"
+        :item="item"
+      ></va-clone-button>
       <va-delete-button
+        v-if="!disableDelete"
         :resource="resource"
         :item="item"
         redirect
@@ -27,5 +40,11 @@ import Page from "../../../mixins/page";
  */
 export default {
   mixins: [Page],
+  props: {
+    disableList: Boolean,
+    disableEdit: Boolean,
+    disableClone: Boolean,
+    disableDelete: Boolean,
+  },
 };
 </script>
