@@ -16,6 +16,10 @@ export default {
      */
     hint: String,
     /**
+     * Set the hint persistent
+     */
+    persistentHint: Boolean,
+    /**
      * Hides hint and validation errors. When set to auto messages will be rendered only if there's a message (hint, error message, counter value etc) to display.
      */
     hideDetails: [Boolean, String],

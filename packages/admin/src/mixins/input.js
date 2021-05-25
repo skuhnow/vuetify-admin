@@ -79,6 +79,7 @@ export default {
         value: this.input,
         appendIcon: this.appendIcon,
         hint: this.hint,
+        persistentHint: this.persistentHint,
         rules: this.rules,
         errorMessages: [...this.errorMessages, ...this.internalErrorMessages],
         hideDetails: this.hideDetails,
