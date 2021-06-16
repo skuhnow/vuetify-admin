@@ -86,12 +86,16 @@ export default {
 
         if (this.fetch && newVal) {
           this.loading = true;
-          let { data } = await this.$store.dispatch(
-            `${this.reference}/getOne`,
-            { id: newVal }
-          );
+          try {
+            let { data } = await this.$store.dispatch(
+              `${this.reference}/getOne`,
+              { id: newVal }
+            );
+            this.referenceItem = data;
+          } catch (e) {
+            this.referenceItem = null;
+          }
 
-          this.referenceItem = data;
           this.loading = false;
         }
       },
