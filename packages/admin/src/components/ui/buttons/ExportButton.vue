@@ -55,6 +55,11 @@ export default {
         });
       }
 
+      params.pagination = {
+        page: 1,
+        perPage: 9999,
+      };
+
       let { data } = await this.$store.dispatch(
         `${this.resource}/getList`,
         params
