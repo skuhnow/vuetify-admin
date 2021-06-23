@@ -5,6 +5,7 @@
   "datatable": {
     "search": "Rechercher",
     "add_filter": "Ajouter un filtre",
+    "reset_filter": "Réinitialiser le filtre",
     "selected_items": "1 élément sélectionné | {count} éléments sélectionnés"
   },
   "pages": {

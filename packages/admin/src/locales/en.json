@@ -6,6 +6,7 @@
   "datatable": {
     "search": "Search",
     "add_filter": "Add filter",
+    "reset_filter": "Reset filter",
     "selected_items": "1 item selected | {count} items selected"
   },
   "pages": {

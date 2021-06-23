@@ -57,6 +57,17 @@
           </template>
         </form-filter>
         <v-spacer></v-spacer>
+        <v-btn
+          v-if="Object.keys(getCurrentFilter).length"
+          text
+          color="success"
+          @click="resetFilter"
+        >
+          <v-icon small>mdi-filter-off</v-icon>
+          <span class="ml-2">
+            {{ $t("va.datatable.reset_filter") }}
+          </span>
+        </v-btn>
         <v-menu offset-y v-if="getDisabledFilters.length">
           <template v-slot:activator="{ on }">
             <v-btn
@@ -353,6 +364,10 @@ export default {
       this.fetchData();
       this.updateQuery();
 
+      localStorage.setItem(
+        `filter_${this.resource}`,
+        JSON.stringify(this.getCurrentFilter)
+      );
       /**
        * Triggered on filter change.
        */
@@ -360,6 +375,10 @@ export default {
     },
   },
   methods: {
+    resetFilter() {
+      this.currentFilter = {};
+      localStorage.removeItem("filter_" + this.resource);
+    },
     async initFiltersFromQuery() {
       let options = {
         page: 1,
@@ -377,6 +396,16 @@ export default {
        * Apply current route query into options
        */
       const { perPage, page, sortBy, sortDesc, filter } = this.$route.query;
+
+      let filterFromQueryOrStorage = null;
+      if (filter) {
+        filterFromQueryOrStorage = filter;
+      } else {
+        const filterLocalStorage = localStorage.getItem("filter_" + this.resource)
+        if (filterLocalStorage) {
+          filterFromQueryOrStorage = filterLocalStorage;
+        }
+      }
 
       if (page) {
         options.page = parseInt(page, 10);
@@ -399,8 +428,9 @@ export default {
       /**
        * Enable active filters from query
        */
-      if (filter) {
-        this.currentFilter = JSON.parse(filter);
+      if (filterFromQueryOrStorage) {
+        localStorage.setItem("filter_" + this.resource, filterFromQueryOrStorage)
+        this.currentFilter = JSON.parse(filterFromQueryOrStorage);
 
         for (let prop in this.currentFilter) {
           let filter = this.getFilters.find((f) => f.source === prop);
