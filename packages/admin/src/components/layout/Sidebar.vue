@@ -17,7 +17,7 @@
       <slot name="img" v-bind="props"></slot>
     </template>
     <v-list dense>
-      <template v-for="(item, index) in menu.filter((l) => l)">
+      <template v-for="(item, index) in clearedMenu.filter((l) => l)">
         <v-subheader v-if="item.heading && !miniVariant" :key="index">
           {{ item.heading }}
         </v-subheader>
@@ -37,7 +37,7 @@
             </v-list-item-content>
           </template>
           <v-list-item
-            v-for="(child, i) in activeChildrens(item.children)"
+            v-for="(child, i) in activeChildren(item.children)"
             :key="i"
             link
             class="pl-8"
@@ -102,8 +102,30 @@ export default {
     value: null,
   },
   methods: {
-    activeChildrens(childrens) {
-      return childrens.filter((children) => !!children);
+    activeChildren(children) {
+      return children.filter((child) => !!child);
+    },
+  },
+  computed: {
+    clearedMenu() {
+      let clearedMenu = [];
+      this.menu.forEach((element) => {
+        if (element === false) {
+          return;
+        }
+        if ("divider" in element) {
+          clearedMenu.push(element);
+        }
+        if ("link" in element) {
+          clearedMenu.push(element);
+        }
+        if ("children" in element) {
+          if (this.activeChildren(element["children"]).length > 0) {
+            clearedMenu.push(element);
+          }
+        }
+      });
+      return clearedMenu;
     },
   },
 };
