@@ -57,12 +57,7 @@
           </template>
         </form-filter>
         <v-spacer></v-spacer>
-        <v-btn
-          v-if="Object.keys(getCurrentFilter).length"
-          text
-          color="success"
-          @click="resetFilter"
-        >
+        <v-btn v-if="hasLocalStorageFilter" text color="success" @click="resetFilter">
           <v-icon small>mdi-filter-off</v-icon>
           <span class="ml-2">
             {{ $t("va.datatable.reset_filter") }}
@@ -278,6 +273,9 @@ export default {
     this.fetchData();
   },
   computed: {
+    hasLocalStorageFilter() {
+      return !!localStorage.getItem("filter_" + this.resource);
+    },
     getCurrentFilter() {
       /**
        * Get clean filter, do not take empty value but booleans
@@ -361,13 +359,14 @@ export default {
       this.$emit("update:options", val);
     },
     currentFilter(newVal) {
-      this.fetchData();
-      this.updateQuery();
-
       localStorage.setItem(
         `filter_${this.resource}`,
         JSON.stringify(this.getCurrentFilter)
       );
+
+      this.fetchData();
+      this.updateQuery();
+
       /**
        * Triggered on filter change.
        */
@@ -401,7 +400,7 @@ export default {
       if (filter) {
         filterFromQueryOrStorage = filter;
       } else {
-        const filterLocalStorage = localStorage.getItem("filter_" + this.resource)
+        const filterLocalStorage = localStorage.getItem("filter_" + this.resource);
         if (filterLocalStorage) {
           filterFromQueryOrStorage = filterLocalStorage;
         }
@@ -420,7 +419,7 @@ export default {
       }
 
       if (sortDesc) {
-        options.sortDesc = sortDesc.split(",").map((bool) => bool === "true");
+        options.sortDesc = sortDesc.split(",").map(bool => bool === "true");
       }
 
       this.listState.options = options;
