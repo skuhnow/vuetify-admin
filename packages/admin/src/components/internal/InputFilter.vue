@@ -62,7 +62,7 @@ export default {
   methods: {
     debounceInput: debounce(function () {
       this.$emit("input", this.input);
-    }, 200),
+    }, 500),
   },
 };
 </script>
