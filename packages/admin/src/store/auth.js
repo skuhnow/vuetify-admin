@@ -57,14 +57,16 @@ export default (provider, router) => {
        * Set fresh user infos on store
        * Called after each URL navigation
        */
-      [CHECK_AUTH]: async ({ commit }) => {
+      [CHECK_AUTH]: async ({ state, commit }) => {
         try {
-          let response = await provider[CHECK_AUTH]();
+          if (state.user === null) {
+            let response = await provider[CHECK_AUTH]();
 
-          if (response) {
-            commit("setUser", response.data);
+            if (response) {
+              commit("setUser", response.data);
+            }
           }
-          return response.data;
+          return state.user;
         } catch (e) {
           commit("setUser", null);
         }
