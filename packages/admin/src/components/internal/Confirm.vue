@@ -1,11 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" max-width="290">
+  <v-dialog v-model="dialog" max-width="450">
     <v-card>
       <v-card-title class="display-1">
-        {{ title }}
+        <span v-html="title" />
       </v-card-title>
       <v-card-text>
-        {{ message }}
+        <span v-html="message" />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

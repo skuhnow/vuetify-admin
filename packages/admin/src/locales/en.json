@@ -39,7 +39,7 @@
   "messages": {
     "created": "New {resource} successfully created !",
     "updated": "{resource} #{id} successfully updated !",
-    "deleted": "{resource} #{id} successfully deleted !",
+    "deleted": "{resource} successfully deleted !",
     "moved": "{resource} #{id} successfully moved !",
     "updated_many": "{count} {resource} successfully updated !",
     "deleted_many": "{count} {resource} successfully deleted !"
@@ -47,8 +47,8 @@
   "confirm": {
     "yes": "Yes",
     "no": "No",
-    "delete_title": "Delete {resource} #{id} ?",
-    "delete_message": "You are about deleting {resource} #{id}. This operation is irreversible !",
+    "delete_title": "Delete {resource} <b>{id}</b> ?",
+    "delete_message": "You are about deleting {resource} <b>{id}</b>. This operation is irreversible !",
     "delete_many_title": "Delete {count} {resource} ?",
     "delete_many_message": "You are about deleting {count} {resource}. This operation is irreversible !",
     "dissociate_title": "Dissociate from {targetResource} #{targetId} ?",
