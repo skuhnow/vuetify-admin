@@ -6,7 +6,7 @@
       handle=".handle"
       @input="update"
     >
-      <div v-for="(item, i) in input" :key="item.id" class="item">
+      <div v-for="(item, i) in input" :key="item._order" class="item">
         <!--
           @slot Your repeatable group of inputs components.
           @binding {string} resource Name of resource.
@@ -69,13 +69,13 @@ export default {
        * Generate fake id for drag tracking
        */
       return (value || []).map((v, i) => {
-        return { ...v, id: i };
+        return { ...v, _order: i };
       });
     },
     add() {
-      let element = { id: 1 };
+      let element = { _order: 1 };
       if (this.input.length > 0) {
-        element = { id: Math.max(...this.input.map(o => o.id)) + 1 };
+        element = { _order: Math.max(...this.input.map(o => o._order)) + 1 };
       }
       this.input.push(element);
       this.update(this.input);
