@@ -2,6 +2,7 @@
  * Supported data actions
  */
 export const GET_LIST = "getList";
+export const GET_EXPORT = "getExport";
 export const GET_MANY = "getMany";
 export const GET_ONE = "getOne";
 export const CREATE = "create";

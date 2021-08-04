@@ -14,6 +14,7 @@
 import Resource from "../../../mixins/resource";
 import Button from "../../../mixins/button";
 import Papa from "papaparse";
+import {GET_EXPORT} from "../../../providers/data/actions";
 
 /**
  * Action button for export all data from a list iterator, aka VaList.
@@ -61,7 +62,7 @@ export default {
       };
 
       let { data } = await this.$store.dispatch(
-        `${this.resource}/getList`,
+        `${this.resource}/${GET_EXPORT}`,
         params
       );
 
