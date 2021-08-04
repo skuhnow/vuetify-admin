@@ -239,6 +239,15 @@ export default {
       default: "q",
     },
     /**
+     * Disable the persisten filter
+     */
+    disablePersistentFilter: {
+      type: Boolean,
+      default() {
+        return get(this.$admin.options, "list.disablePersistentFilter") || false;
+      },
+    },
+    /**
      * Association infos object in case of this list is related to a current show or edit resource page.
      * Enable the association between resources directly by an autocomplete an associate action.
      */
@@ -356,10 +365,12 @@ export default {
       this.$emit("update:options", val);
     },
     currentFilter(newVal) {
-      localStorage.setItem(
-        `filter_${this.resource}`,
-        JSON.stringify(this.getCurrentFilter)
-      );
+      if (!this.disablePersistentFilter) {
+        localStorage.setItem(
+          `filter_${this.resource}`,
+          JSON.stringify(this.getCurrentFilter)
+        );
+      }
 
       this.fetchData();
       this.updateQuery();
@@ -404,7 +415,7 @@ export default {
       let filterFromQueryOrStorage = null;
       if (filter) {
         filterFromQueryOrStorage = filter;
-      } else {
+      } else if (!this.disablePersistentFilter) {
         const filterLocalStorage = localStorage.getItem("filter_" + this.resource);
         if (filterLocalStorage) {
           filterFromQueryOrStorage = filterLocalStorage;
