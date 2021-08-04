@@ -57,7 +57,7 @@
           </template>
         </form-filter>
         <v-spacer></v-spacer>
-        <v-btn v-if="hasLocalStorageFilter" text color="success" @click="resetFilter">
+        <v-btn v-if="hasLocalStorageFilter()" text color="success" @click="resetFilter">
           <v-icon small>mdi-filter-off</v-icon>
           <span class="ml-2">
             {{ $t("va.datatable.reset_filter") }}
@@ -273,9 +273,6 @@ export default {
     this.fetchData();
   },
   computed: {
-    hasLocalStorageFilter() {
-      return !!localStorage.getItem("filter_" + this.resource);
-    },
     getCurrentFilter() {
       /**
        * Get clean filter, do not take empty value but booleans
@@ -374,6 +371,14 @@ export default {
     },
   },
   methods: {
+    hasLocalStorageFilter() {
+      const localStorageFilterStr = localStorage.getItem("filter_" + this.resource);
+      if (localStorageFilterStr) {
+        const localStorageFilter = JSON.parse(localStorageFilterStr);
+        return localStorageFilter && localStorageFilter.constructor === Object && Object.keys(localStorageFilter).length > 0;
+      }
+      return false;
+    },
     resetFilter() {
       this.currentFilter = {};
       localStorage.removeItem("filter_" + this.resource);
