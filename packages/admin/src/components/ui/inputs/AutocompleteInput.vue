@@ -13,7 +13,7 @@
     :items="items || choices"
     :search-input.sync="search"
     @change="change"
-    @input="update"
+    @input="onInput"
     persistent-hint
   >
     <template v-slot:selection="data" v-if="$scopedSlots.selection">
@@ -94,6 +94,10 @@ export default {
         ...(this.items || []),
         ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
       ];
+    },
+    onInput(value) {
+      this.update(value);
+      this.search = "";
     },
   },
   watch: {
