@@ -18,7 +18,11 @@
     @input="update"
     :type="type"
     persistent-hint
-  ></v-text-field>
+  >
+    <template v-slot:message="{ message }">
+      <span v-html="message"></span>
+    </template>
+  </v-text-field>
 </template>
 
 <script>
