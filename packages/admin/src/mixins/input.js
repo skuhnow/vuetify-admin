@@ -81,6 +81,7 @@ export default {
         hint: this.hint,
         persistentHint: this.persistentHint,
         rules: this.rules,
+        errorCount: 10,
         errorMessages: [...this.errorMessages, ...this.internalErrorMessages],
         hideDetails: this.hideDetails,
         dense: this.dense,
