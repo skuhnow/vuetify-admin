@@ -76,10 +76,11 @@ export default (provider, router) => {
        * Called after each API error (4xx, 5xx)
        * Do automatic logout if reject promise returned
        */
-      [CHECK_ERROR]: async ({ dispatch }, error) => {
+      [CHECK_ERROR]: async ({ commit, dispatch }, error) => {
         try {
           await provider[CHECK_ERROR](error);
         } catch (e) {
+          commit("setUser", null);
           dispatch("logout");
         }
       },
