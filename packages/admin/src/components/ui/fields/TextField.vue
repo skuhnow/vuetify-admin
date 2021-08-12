@@ -1,5 +1,9 @@
 <template>
-  <span>{{ getText }}</span>
+  <div>
+    <slot v-bind="{ item, value }">
+      <span>{{ getText }}</span>
+    </slot>
+  </div>
 </template>
 
 <script>

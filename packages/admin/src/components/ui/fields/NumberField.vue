@@ -1,5 +1,9 @@
 <template>
-  <span>{{ numberFormatted(value) }}</span>
+  <div>
+    <slot v-bind="{ item, value }">
+      <span>{{ numberFormatted(value) }}</span>
+    </slot>
+  </div>
 </template>
 
 <script>
