@@ -87,10 +87,13 @@ export default class VuetifyAdmin {
 
         let nameKey = `resources.${r.name}.name`;
 
-        let getName = (count) =>
-          i18n.te(nameKey)
+        let getName = (count) => {
+          if (r.displayName) return r.displayName;
+
+          return i18n.te(nameKey)
             ? i18n.tc(nameKey, count)
             : upperFirst(lowerCase(r.name));
+        };
 
         return {
           ...r,
@@ -108,7 +111,7 @@ export default class VuetifyAdmin {
                 (i18n.te(titleKey)
                   ? i18n.t(titleKey, item)
                   : i18n.t(`va.pages.${action}`, {
-                      resource: getName(1).toLowerCase(),
+                      resource: getName(1),
                       label:
                         typeof r.label === "function"
                           ? r.label(item)
@@ -119,7 +122,7 @@ export default class VuetifyAdmin {
             return i18n.te(titleKey)
               ? i18n.t(titleKey)
               : i18n.t(`va.pages.${action}`, {
-                  resource: getName(action === "list" ? 10 : 1).toLowerCase(),
+                  resource: getName(action === "list" ? 10 : 1),
                 });
           },
           canAction: (action) => {
