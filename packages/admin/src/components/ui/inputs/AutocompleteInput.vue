@@ -11,6 +11,7 @@
     :item-text="getItemText"
     :item-value="getItemValue"
     :items="items || choices"
+    :return-object="returnObject"
     :search-input.sync="search"
     @change="change"
     @input="onInput"
@@ -59,6 +60,7 @@ export default {
      * Enable taggable mode. Transform autocomplete into combobox.
      */
     taggable: Boolean,
+    returnObject: Boolean,
     initialLoad: {
       type: Boolean,
       default: true,
@@ -94,6 +96,9 @@ export default {
         ...(this.items || []),
         ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
       ];
+    },
+    resetList() {
+      this.items = [];
     },
     onInput(value) {
       this.update(value);
