@@ -1,7 +1,7 @@
 <template>
   <form>
     <v-row>
-      <v-col sm="auto" v-for="(item, index) in filters" :key="index">
+      <v-col cols="12" sm="auto" v-for="(item, index) in filters" :key="index">
         <div class="d-flex align-center">
           <v-btn
             small
