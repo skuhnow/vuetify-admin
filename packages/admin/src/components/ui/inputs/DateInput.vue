@@ -17,7 +17,7 @@
           append-icon="mdi-calendar"
           v-on="on"
           :filled="filled"
-          @click:clear="input = null"
+          @click:clear="updateDate(null)"
           persistent-hint
         ></v-text-field>
       </template>
