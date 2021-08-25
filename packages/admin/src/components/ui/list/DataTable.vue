@@ -364,14 +364,30 @@ export default {
       return this.listState.items;
     },
     headers() {
-      let fields = this.getFields.map((field) => {
-        return {
-          text: field.label,
-          value: field.source,
-          sortable: field.sortable,
-          align: field.align || this.getDefaultAlign(field),
-        };
-      });
+      let fields = this.getFields
+        .filter((f) => {
+          const permissions = f.permissions || [];
+          if (permissions.length) {
+            if (!this.$admin.can(permissions)) {
+              return false;
+            }
+          }
+          if (typeof f.if === "boolean") {
+            return f.if;
+          }
+          if (typeof f.if === "function") {
+            return f.if();
+          }
+          return true;
+        })
+        .map((field) => {
+          return {
+            text: field.label,
+            value: field.source,
+            sortable: field.sortable,
+            align: field.align || this.getDefaultAlign(field),
+          };
+        });
 
       if (!this.disableActions) {
         fields.push({

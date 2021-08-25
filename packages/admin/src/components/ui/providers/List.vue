@@ -317,6 +317,21 @@ export default {
       }
 
       return [...filters, ...this.filters]
+        .filter((f) => {
+          const permissions = f.permissions || [];
+          if (permissions.length) {
+            if (!this.$admin.can(permissions)) {
+              return false;
+            }
+          }
+          if (typeof f.if === "boolean") {
+            return f.if;
+          }
+          if (typeof f.if === "function") {
+            return f.if();
+          }
+          return true;
+        })
         .map((f) => {
           return typeof f === "string"
             ? {
