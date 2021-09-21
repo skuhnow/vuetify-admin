@@ -5,6 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import messages from "./store/messages";
 import auth from "./store/auth";
 import guest from "./store/guest";
+import breadcrumbs from "./store/breadcrumbs";
 import api from "./store/api";
 
 import resourceCrudModule from "./store/resource";
@@ -262,6 +263,7 @@ export default class VuetifyAdmin {
      */
     store.registerModule("messages", messages);
     store.registerModule("api", api);
+    store.registerModule("breadcrumbs", breadcrumbs);
     store.registerModule(
       "auth",
       this.authProvider ? auth(this.authProvider, router) : guest
