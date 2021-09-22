@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-snackbar v-model="snackbar" :color="color">
-      {{ text }}
+      <span v-html="text" />
       <v-btn text @click="snackbar = false">
         {{ $t("va.close") }}
       </v-btn>
