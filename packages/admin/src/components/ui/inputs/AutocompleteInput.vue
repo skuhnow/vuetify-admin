@@ -47,7 +47,7 @@ export default {
      */
     minChars: {
       type: Number,
-      default: 3,
+      default: 2,
     },
     /**
      * Name of request query for searching into your API.
