@@ -263,7 +263,10 @@ export default {
      */
     multiSort: {
       type: Boolean,
-      default: true,
+      default() {
+        const multiSort = get(this.$admin.options, "list.multiSort");
+        return typeof multiSort === 'boolean' ? multiSort : true;
+      }
     },
     /**
      * Enable row expand mode.
