@@ -226,6 +226,7 @@
 
 <script>
 import upperFirst from "lodash/upperFirst";
+import get from "lodash/get";
 
 /**
  * Data table component, you will need data iterator as `VaList` in order to make it usable.
@@ -265,8 +266,8 @@ export default {
       type: Boolean,
       default() {
         const multiSort = get(this.$admin.options, "list.multiSort");
-        return typeof multiSort === 'boolean' ? multiSort : true;
-      }
+        return typeof multiSort === "boolean" ? multiSort : true;
+      },
     },
     /**
      * Enable row expand mode.

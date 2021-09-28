@@ -387,6 +387,8 @@ export default {
         );
       }
 
+      // go to page 1 after filtering
+      this.listState.options.page = 1;
       this.fetchData();
       this.updateQuery();
 
