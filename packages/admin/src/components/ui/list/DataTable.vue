@@ -17,7 +17,7 @@
       :sort-by.sync="listState.options.sortBy"
       :sort-desc.sync="listState.options.sortDesc"
       @input="(s) => (listState.selected = s)"
-      @update:sort-desc="listState.reload"
+      @update:sort-desc="reloadListOnSort"
       :class="{ 'clickable-rows': rowClick || !!$listeners['row-click'] }"
     >
       <template
@@ -433,6 +433,10 @@ export default {
     },
   },
   methods: {
+    reloadListOnSort() {
+      this.listState.options.page = 1;
+      this.listState.reload();
+    },
     getDefaultAlign(field) {
       if (["number"].includes(field.type)) {
         return "right";
