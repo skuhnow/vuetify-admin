@@ -403,13 +403,21 @@ export default {
       const localStorageFilterStr = localStorage.getItem("filter_" + this.resource);
       if (localStorageFilterStr) {
         const localStorageFilter = JSON.parse(localStorageFilterStr);
-        return localStorageFilter && localStorageFilter.constructor === Object && Object.keys(localStorageFilter).length > 0;
+        return localStorageFilter && localStorageFilter.constructor === Object && Object.keys(localStorageFilter)
+          .filter(filterKey => filterKey.charAt(0) !== "_")
+          .length > 0;
       }
       return false;
     },
     resetFilter() {
-      this.currentFilter = {};
-      localStorage.removeItem("filter_" + this.resource);
+      // don't delete internal filters
+      for (var filterKey in this.currentFilter){
+        if (filterKey.charAt(0) !== "_") {
+          delete this.currentFilter[filterKey];
+        }
+      }
+      localStorage.setItem("filter_" + this.resource, JSON.stringify(this.currentFilter));
+      this.listState.reload();
     },
     async initFiltersFromQuery() {
       let options = {
