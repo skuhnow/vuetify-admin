@@ -441,9 +441,8 @@ export default {
       if (filter) {
         filterFromQueryOrStorage = filter;
       } else if (!this.disablePersistentFilter) {
-        const filterLocalStorage = localStorage.getItem("filter_" + this.resource);
-        if (filterLocalStorage) {
-          filterFromQueryOrStorage = filterLocalStorage;
+        if (this.hasLocalStorageFilter()) {
+          filterFromQueryOrStorage = localStorage.getItem("filter_" + this.resource);
         }
       }
 
