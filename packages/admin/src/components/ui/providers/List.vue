@@ -12,7 +12,7 @@
       showFirstLastPage: true,
       disableItemsPerPage,
     }"
-    @update:items-per-page="listState.reload"
+    @update:items-per-page="itemsPerPageUpdated"
     @update:page="listState.reload"
   >
     <template v-slot:header v-if="!hideHeader">
@@ -399,6 +399,10 @@ export default {
     },
   },
   methods: {
+    itemsPerPageUpdated() {
+      localStorage.setItem("itemsPerPage_" + this.resource, this.listState.options.itemsPerPage);
+      this.listState.reload();
+    },
     hasLocalStorageFilter() {
       const localStorageFilterStr = localStorage.getItem("filter_" + this.resource);
       if (localStorageFilterStr) {
@@ -450,8 +454,10 @@ export default {
         options.page = parseInt(page, 10);
       }
 
-      if (perPage) {
-        options.itemsPerPage = parseInt(perPage, 10);
+      const localStorageItemsPerPage = localStorage.getItem("itemsPerPage_" + this.resource);
+      const resolvedPerPage = localStorageItemsPerPage ?? perPage;
+      if (resolvedPerPage) {
+        options.itemsPerPage = parseInt(resolvedPerPage, 10);
       }
 
       if (sortBy) {
