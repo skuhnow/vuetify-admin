@@ -94,7 +94,11 @@
           @click="onAction('create')"
         ></va-create-button>
         <!-- @slot Put here some global action with components based on VaActionButton. -->
-        <slot name="actions"></slot>
+        <slot
+          name="actions"
+          v-bind:listState="listState"
+          v-bind:currentFilter="getCurrentFilter"
+        ></slot>
         <va-export-button
           v-if="!disableExport"
           :resource="resource"
