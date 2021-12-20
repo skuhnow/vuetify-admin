@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :color="color">
+    <v-snackbar v-model="snackbar" :color="color" v-bind="options">
       <span v-html="text" />
       <v-btn text @click="snackbar = false">
         {{ $t("va.close") }}
@@ -28,13 +28,15 @@ export default {
       snackbar: false,
       text: null,
       color: null,
+      options: null,
     };
   },
   watch: {
-    "$store.state.messages.toast"({ color, message }) {
+    "$store.state.messages.toast"({ color, message, options }) {
       this.snackbar = true;
       this.text = message;
       this.color = color;
+      this.options = options;
     },
   },
 };

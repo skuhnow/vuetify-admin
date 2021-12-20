@@ -26,8 +26,8 @@ export default {
     cleanError(state) {
       state.error = null;
     },
-    showToast(state, { color, message }) {
-      state.toast = { color, message };
+    showToast(state, { color, message, options }) {
+      state.toast = { color, message, options };
     },
   },
   actions: {
