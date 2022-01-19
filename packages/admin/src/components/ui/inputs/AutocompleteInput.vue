@@ -116,9 +116,6 @@ export default {
       immediate: true,
     },
     async search(val, old) {
-      if (old === null) {
-        return;
-      }
       if (!val || val.length < this.minChars) {
         return;
       }
