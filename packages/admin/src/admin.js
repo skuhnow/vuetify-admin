@@ -364,6 +364,19 @@ export default class VuetifyAdmin {
        * Force redirect to login if not logged for authenticated routes
        */
       if (to.meta.authenticated) {
+        /**
+         * If no user was provided but the login was successful (i.E. a SSO Login)
+         * go to "not_logged_in" page to avoid endless loop
+         */
+        const urlParams = new URLSearchParams(window.location.search);
+        const samlLoginSuccessful = urlParams.get("login_successful") === "true";
+        if (samlLoginSuccessful) {
+          if (to.name === "not_logged_in") {
+            return next();
+          }
+          return next({ name: "not_logged_in" });
+        }
+
         return next({ name: "login" });
       }
 
