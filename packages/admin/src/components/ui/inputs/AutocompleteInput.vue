@@ -62,10 +62,6 @@ export default {
      */
     taggable: Boolean,
     returnObject: Boolean,
-    initialLoad: {
-      type: Boolean,
-      default: true,
-    },
     itemsPerPage: {
       type: Number,
       default() {
@@ -76,12 +72,8 @@ export default {
   data() {
     return {
       search: null,
+      initialSearch: true,
     };
-  },
-  created() {
-    if (this.initialLoad) {
-      this.loadList();
-    }
   },
   methods: {
     filterCallback() {
@@ -92,14 +84,18 @@ export default {
         this.items = await this.fetchCurrentChoices(
           this.multiple ? value : [value]
         );
-        await this.loadList();
       }
     },
     async loadList(val = null) {
-      this.items = [
-        ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
-        ...(this.items || []),
-      ];
+      if (this.initialSearch) {
+        this.initialSearch = false;
+        this.items = [
+          ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+          ...(this.items || []),
+        ];
+      } else {
+        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || []
+      }
     },
     resetList() {
       this.items = [];
