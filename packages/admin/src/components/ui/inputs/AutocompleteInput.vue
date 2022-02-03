@@ -101,6 +101,7 @@ export default {
       this.items = [];
     },
     onInput(value) {
+      this.initialSearch = true;
       this.update(value);
       this.search = "";
     },
