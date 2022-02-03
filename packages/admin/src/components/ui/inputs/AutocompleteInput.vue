@@ -16,6 +16,7 @@
     @change="change"
     @input="onInput"
     persistent-hint
+    :filter="filterCallback"
   >
     <template v-slot:selection="data" v-if="$scopedSlots.selection">
       <!-- @slot Define a custom selection appearance -->
@@ -83,6 +84,9 @@ export default {
     }
   },
   methods: {
+    filterCallback() {
+      return true;
+    },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
         this.items = await this.fetchCurrentChoices(
@@ -93,8 +97,8 @@ export default {
     },
     async loadList(val = null) {
       this.items = [
-        ...(this.items || []),
         ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+        ...(this.items || []),
       ];
     },
     resetList() {
