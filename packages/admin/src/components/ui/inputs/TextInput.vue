@@ -4,7 +4,8 @@
     v-bind="commonProps"
     auto-grow
     :filled="filled"
-    :disabled="disabled"
+    :readonly="disabled"
+    :class="{ 'v-input--is-disabled': disabled }"
     @change="change"
     @input="update"
     persistent-hint
@@ -13,7 +14,8 @@
     v-else
     v-bind="commonProps"
     :filled="filled"
-    :disabled="disabled"
+    :readonly="disabled"
+    :class="{ 'v-input--is-disabled': disabled }"
     @change="change"
     @input="update"
     :type="type"
