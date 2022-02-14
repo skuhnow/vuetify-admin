@@ -20,6 +20,8 @@
     @input="update"
     :type="type"
     persistent-hint
+    :append-icon="showCopyPaste ? 'mdi-content-copy' : ''"
+    @click:append="copyToClipboard()"
   >
     <template v-slot:message="{ message }">
       <span v-html="message"></span>
@@ -66,6 +68,20 @@ export default {
     filled: {
       type: Boolean,
       default: true,
+    },
+    showCopyPaste: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    copyToClipboard() {
+      this.$copyText(this.value).then(() => {
+        this.$store.commit(`messages/showToast`, {
+          color: "success",
+          message: `Text copied!`,
+        });
+      });
     },
   },
 };
