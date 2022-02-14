@@ -26,6 +26,13 @@
       <!-- @slot Define a custom item appearance -->
       <slot name="item" v-bind="data"></slot>
     </template>
+    <template #no-data>
+      <v-list-item>
+        <v-list-item-content>
+          {{ $t("va.messages.type_to_search") }}
+        </v-list-item-content>
+      </v-list-item>
+    </template>
   </component>
 </template>
 
@@ -94,7 +101,7 @@ export default {
           ...(this.items || []),
         ];
       } else {
-        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || []
+        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || [];
       }
     },
     resetList() {

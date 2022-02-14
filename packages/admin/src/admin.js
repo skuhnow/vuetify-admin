@@ -179,7 +179,13 @@ export default class VuetifyAdmin {
     /**
      * Get full resource object meta from name
      */
-    this.getResource = (name) => this.resources.find((r) => r.name === name);
+    this.getResource = (name) => {
+      let resource = this.resources.find((r) => r.name === name);
+      if (!resource) {
+        throw new Error("No resource found for '" + name + "'");
+      }
+      return resource;
+    };
 
     /**
      * Get label source, humanize it if not found
