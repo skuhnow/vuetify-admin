@@ -259,6 +259,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    defaultFilter: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -418,14 +422,21 @@ export default {
       return false;
     },
     resetFilter() {
-      // don't delete internal filters
-      for (var filterKey in this.currentFilter){
+      for (var filterKey in this.currentFilter) {
+        // don't delete internal filters
         if (filterKey.charAt(0) !== "_") {
           delete this.currentFilter[filterKey];
         }
       }
+
+      Object.keys(this.getDefaultFilter()).forEach(
+        defaultFilterField => this.currentFilter[defaultFilterField] = this.getDefaultFilter()[defaultFilterField]);
+
       localStorage.setItem("filter_" + this.resource, JSON.stringify(this.currentFilter));
       this.listState.reload();
+    },
+    getDefaultFilter() {
+      return this.defaultFilter;
     },
     async initFiltersFromQuery() {
       let options = {
@@ -446,6 +457,7 @@ export default {
       const { perPage, page, sortBy, sortDesc, filter } = this.$route.query;
 
       let filterFromQueryOrStorage = null;
+      filterFromQueryOrStorage = JSON.stringify(this.getDefaultFilter());
       if (filter) {
         filterFromQueryOrStorage = filter;
       } else if (!this.disablePersistentFilter) {
