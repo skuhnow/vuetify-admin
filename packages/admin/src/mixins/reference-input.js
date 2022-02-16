@@ -25,6 +25,7 @@ export default {
     return {
       loading: false,
       items: null,
+      fetchedItems: null,
     };
   },
   computed: {
@@ -99,6 +100,7 @@ export default {
       });
 
       this.loading = false;
+      this.fetchedItems = data;
       return data;
     },
     async fetchCurrentChoices(ids) {

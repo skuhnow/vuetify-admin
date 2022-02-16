@@ -27,13 +27,6 @@
       <!-- @slot Define a custom item appearance -->
       <slot name="item" v-bind="data"></slot>
     </template>
-    <template #no-data>
-      <v-list-item>
-        <v-list-item-content>
-          {{ $t("va.messages.type_to_search") }}
-        </v-list-item-content>
-      </v-list-item>
-    </template>
   </component>
 </template>
 
@@ -70,6 +63,10 @@ export default {
      */
     taggable: Boolean,
     returnObject: Boolean,
+    initialLoad: {
+      type: Boolean,
+      default: true,
+    },
     itemsPerPage: {
       type: Number,
       default() {
@@ -80,36 +77,36 @@ export default {
   data() {
     return {
       search: null,
-      initialSearch: true,
     };
   },
+  created() {
+    if (this.initialLoad) {
+      this.loadList();
+    }
+  },
   methods: {
-    filterCallback() {
-      return true;
+    filterCallback(item, queryText, itemText) {
+      if (this.reference && this.fetchedItems.length) {
+        return this.fetchedItems.filter(fetchedItem => fetchedItem.id === item.id).length > 0;
+      }
+      return itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1;
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.items = await this.fetchCurrentChoices(
-          this.multiple ? value : [value]
-        );
+        this.items = await this.fetchCurrentChoices(this.multiple ? value : [value]);
+        await this.loadList();
       }
     },
     async loadList(val = null) {
-      if (this.initialSearch) {
-        this.initialSearch = false;
-        this.items = [
-          ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
-          ...(this.items || []),
-        ];
-      } else {
-        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || [];
-      }
+      this.items = [
+        ...(this.items || []),
+        ...((await this.fetchChoices(val, this.itemsPerPage)) || [])
+      ];
     },
     resetList() {
       this.items = [];
     },
     onInput(value) {
-      this.initialSearch = true;
       this.update(value);
       this.search = "";
     },
