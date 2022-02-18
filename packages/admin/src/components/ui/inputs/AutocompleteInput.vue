@@ -87,7 +87,8 @@ export default {
   methods: {
     filterCallback(item, queryText, itemText) {
       if (this.reference && this.fetchedItems.length) {
-        return this.fetchedItems.filter(fetchedItem => fetchedItem.id === item.id).length > 0;
+        const itemJson = JSON.stringify(item);
+        return this.fetchedItems.filter(fetchedItem => JSON.stringify(fetchedItem) === itemJson).length > 0;
       }
       return itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1;
     },
