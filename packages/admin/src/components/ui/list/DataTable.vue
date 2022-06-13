@@ -3,6 +3,7 @@
     <v-data-table
       :headers="headers"
       :items="items"
+      :item-key="itemKey"
       :show-select="!disableSelect"
       :disable-sort="disableSort"
       :value="listState.selected"
@@ -350,6 +351,10 @@ export default {
     updateData: {
       type: Object,
       default: () => {},
+    },
+    itemKey: {
+      type: String,
+      default: "id",
     },
   },
   data() {

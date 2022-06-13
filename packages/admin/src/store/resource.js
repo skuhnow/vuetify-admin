@@ -57,7 +57,7 @@ export default ({ provider, resource, i18n }) => {
             root: true,
           });
 
-          dispatch("showError", e.message);
+          dispatch("showError", e);
           dispatch("auth/checkError", e, {
             root: true,
           });
@@ -147,7 +147,12 @@ export default ({ provider, resource, i18n }) => {
           );
         }
       },
-      showError({ commit }, message) {
+      showError({ commit }, error) {
+        let message = error?.response?.data?.message;
+        if (!message) {
+          message = error.message;
+        }
+
         commit(
           "messages/showToast",
           { color: "error", message },
