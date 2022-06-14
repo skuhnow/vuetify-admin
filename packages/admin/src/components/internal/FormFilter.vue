@@ -21,6 +21,7 @@
             :value="value[item.source]"
           >
             <input-filter
+              :ref="item.source"
               :type="item.type"
               :source="item.source"
               :label="item.label"
@@ -53,7 +54,28 @@ export default {
       default: () => [],
     },
   },
+  mounted() {
+    this.setFocusOnFirstFilter();
+  },
   methods: {
+    setFocusOnFirstFilter() {
+      if (this.filters.length === 0) {
+        return;
+      }
+      const firstFilterSource = this.filters[0].source;
+      const element = this.$refs[firstFilterSource][0].$el;
+
+      if (element) {
+        setTimeout(() => {
+          const input = element.querySelector("input:not([type=hidden]),textarea:not([type=hidden])");
+          if (input) {
+            setTimeout(() => {
+              input.focus();
+            }, 0);
+          }
+        }, 1);
+      }
+    },
     remove(filter) {
       let value = { ...this.value };
       delete value[filter.source];
