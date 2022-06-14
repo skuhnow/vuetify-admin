@@ -6,6 +6,7 @@
     :filled="filled"
     :multiple="multiple"
     :chips="chips"
+    :autofocus="autofocus"
     :small-chips="smallChips"
     :item-text="getItemText"
     :item-value="getItemValue"
@@ -30,6 +31,12 @@ import Disabled from "../../../mixins/disabled";
  */
 export default {
   mixins: [Input, Multiple, Editable, ReferenceInput, Disabled],
+  props: {
+    autofocus: {
+      type: Boolean,
+      default: false,
+    },
+  },
   async created() {
     this.items = await this.fetchChoices();
   },

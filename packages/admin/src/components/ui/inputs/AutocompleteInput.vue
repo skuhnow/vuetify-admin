@@ -7,6 +7,7 @@
     :filled="filled"
     :multiple="multiple"
     :chips="chips"
+    :autofocus="autofocus"
     :small-chips="smallChips"
     :loading="loading"
     :item-text="getItemText"
@@ -72,6 +73,10 @@ export default {
       default() {
         return get(this.$admin.options, "autoComplete.itemsPerPage") || 50;
       },
+    },
+    autofocus: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

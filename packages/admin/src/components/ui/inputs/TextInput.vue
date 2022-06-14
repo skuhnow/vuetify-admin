@@ -3,6 +3,7 @@
     v-if="multiline"
     v-bind="commonProps"
     auto-grow
+    :autofocus="autofocus"
     :filled="filled"
     :readonly="disabled"
     :class="{ 'v-input--is-disabled': disabled }"
@@ -13,6 +14,7 @@
   <v-text-field
     v-else
     v-bind="commonProps"
+    :autofocus="autofocus"
     :filled="filled"
     :readonly="disabled"
     :class="{ 'v-input--is-disabled': disabled }"
@@ -70,6 +72,10 @@ export default {
       default: true,
     },
     showCopyPaste: {
+      type: Boolean,
+      default: false,
+    },
+    autofocus: {
       type: Boolean,
       default: false,
     },
