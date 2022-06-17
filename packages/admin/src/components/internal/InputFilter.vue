@@ -8,7 +8,7 @@
     hide-details
     :filled="false"
     small-chips
-    clearable
+    :clearable="clearable"
     v-model="input"
   >
   </component>
@@ -23,6 +23,10 @@ export default {
   props: {
     value: {
       default: null,
+    },
+    clearable: {
+      type: Boolean,
+      default: true,
     },
     type: {
       type: String,
