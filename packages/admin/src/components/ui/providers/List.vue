@@ -436,7 +436,7 @@ export default {
       this.listState.reload();
     },
     getDefaultFilter() {
-      return this.defaultFilter;
+      return this.defaultFilter ?? {};
     },
     async initFiltersFromQuery() {
       let options = {
