@@ -116,7 +116,7 @@
         @binding {boolean} loading Loading indicator.
         @binding {number} total Total count from server-side.
       -->
-      <slot v-bind="listState"></slot>
+      <slot v-bind="listState" v-bind:currentFilter="getCurrentFilter"></slot>
     </template>
     <template v-slot:loading>
       <slot :resource="resource" :loading="listState.loading"></slot>
