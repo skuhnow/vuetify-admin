@@ -429,14 +429,20 @@ export default {
         }
       }
 
-      Object.keys(this.getDefaultFilter()).forEach(
-        defaultFilterField => this.currentFilter[defaultFilterField] = this.getDefaultFilter()[defaultFilterField]);
+      if (this.getDefaultFilter()) {
+        Object.keys(this.getDefaultFilter()).forEach(
+          (defaultFilterField) =>
+            (this.currentFilter[defaultFilterField] = this.getDefaultFilter()[
+              defaultFilterField
+            ])
+        );
+      }
 
       localStorage.setItem("filter_" + this.resource, JSON.stringify(this.currentFilter));
       this.listState.reload();
     },
     getDefaultFilter() {
-      return this.defaultFilter ?? {};
+      return this.defaultFilter;
     },
     async initFiltersFromQuery() {
       let options = {
