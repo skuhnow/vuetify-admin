@@ -161,7 +161,7 @@
                 @click="(item) => onAction('show', item)"
               ></va-show-button>
               <va-edit-button
-                v-if="!disableEdit"
+                v-if="!disableEdit && (!canEdit || (typeof canEdit === 'function' && canEdit(item)))"
                 :disable-redirect="disableEditRedirect || rowEdit"
                 :resource="listState.resource"
                 :item="item"
@@ -197,7 +197,7 @@
                 @event deleted
               -->
               <va-delete-button
-                v-if="!disableDelete"
+                v-if="!disableDelete && (!canDelete || (typeof canDelete === 'function' && canDelete(item)))"
                 :resource="listState.resource"
                 :item="item"
                 icon
@@ -238,6 +238,14 @@ export default {
     listState: { default: undefined },
   },
   props: {
+    canEdit: {
+      type: Function,
+      default: null,
+    },
+    canDelete: {
+      type: Function,
+      default: null,
+    },
     /**
      * Make each row clickable. Use predefined function as edit or show.
      * @values show, edit
