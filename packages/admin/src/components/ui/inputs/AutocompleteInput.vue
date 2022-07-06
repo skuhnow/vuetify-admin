@@ -78,6 +78,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    emptyOption: {
+      type: Boolean,
+      default: false,
+    },
+    emptyOptionText: {
+      type: String,
+      default: 'Empty',
+    },
   },
   data() {
     return {
@@ -104,9 +112,22 @@ export default {
       }
     },
     async loadList(val = null) {
+      if (this.emptyOption) {
+        let empty = {};
+        empty[this.getItemText] = this.emptyOptionText;
+        empty[this.getItemValue] = '~empty~';
+
+        this.items = [
+          ...[empty],
+          ...(this.items || []),
+          ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+        ];
+        return;
+      }
+
       this.items = [
         ...(this.items || []),
-        ...((await this.fetchChoices(val, this.itemsPerPage)) || [])
+        ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
       ];
     },
     resetList() {
