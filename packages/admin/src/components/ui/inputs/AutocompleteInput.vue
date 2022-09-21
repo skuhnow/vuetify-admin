@@ -17,6 +17,7 @@
     :search-input.sync="search"
     @change="change"
     @input="onInput"
+    @blur="onBlur"
     persistent-hint
     :filter="filterCallback"
   >
@@ -89,7 +90,9 @@ export default {
   },
   data() {
     return {
+      currentChoices: [],
       search: null,
+      initialSearchComplete: false,
     };
   },
   created() {
@@ -107,8 +110,8 @@ export default {
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.items = await this.fetchCurrentChoices(this.multiple ? value : [value]);
-        await this.loadList();
+        this.currentChoices = await this.fetchCurrentChoices(this.multiple ? value : [value]);
+        await this.loadList(null);
       }
     },
     async loadList(val = null) {
@@ -119,14 +122,14 @@ export default {
 
         this.items = [
           ...[empty],
-          ...(this.items || []),
+          ...(this.currentChoices || []),
           ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
         ];
         return;
       }
 
       this.items = [
-        ...(this.items || []),
+        ...(this.currentChoices || []),
         ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
       ];
     },
@@ -136,6 +139,9 @@ export default {
     onInput(value) {
       this.update(value);
       this.search = "";
+    },
+    onBlur() {
+      this.loadList();
     },
   },
   watch: {
@@ -149,6 +155,10 @@ export default {
       immediate: true,
     },
     async search(val, old) {
+      if (this.initialSearchComplete == false) {
+        this.initialSearchComplete = true;
+        return;
+      }
       if (!val || val.length < this.minChars) {
         return;
       }
