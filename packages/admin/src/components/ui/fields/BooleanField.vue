@@ -1,10 +1,10 @@
 <template>
-  <v-tooltip bottom>
+  <v-tooltip bottom :disabled="!hasLabel">
     <template v-slot:activator="{ on }">
       <v-icon v-if="value" v-on="on">{{ iconTrue }}</v-icon>
       <v-icon v-else v-on="on">{{ iconFalse }}</v-icon>
     </template>
-    <span>{{ value ? $t(labelTrue) : $t(labelFalse) }}</span>
+    <span>{{ label }}</span>
   </v-tooltip>
 </template>
 
@@ -44,6 +44,14 @@ export default {
     iconFalse: {
       type: String,
       default: "mdi-close",
+    },
+  },
+  computed: {
+    label() {
+      return this.value ? this.labelTrue : this.labelFalse;
+    },
+    hasLabel() {
+      return !!this.label;
     },
   },
 };

@@ -25,11 +25,17 @@ export default {
         return this.$admin.options.numberFormat;
       },
     },
+    showZero: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     numberFormatted(val) {
       if (val) {
         return this.$n(val, this.format);
+      } else if (this.showZero) {
+        return this.$n(0, this.format);
       }
     },
   },
