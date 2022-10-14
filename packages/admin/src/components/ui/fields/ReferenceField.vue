@@ -70,6 +70,14 @@ export default {
       if (typeof text === "function") {
         return text(this.referenceItem);
       }
+      if (Array.isArray(this.referenceItem)) {
+        let returnValue = [];
+        this.referenceItem.forEach(item => {
+          returnValue.push(item[text] || item);
+        });
+        return returnValue.join(', ');
+      }
+
       return this.referenceItem[text] || this.referenceItem;
     },
   },
