@@ -1,17 +1,17 @@
 <template>
-  <span v-if="value">
-    <v-progress-linear indeterminate v-if="loading"></v-progress-linear>
-    <v-chip v-else-if="chip" :color="getColor(value)" :small="small" :to="link">
-      <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
-    </v-chip>
-    <router-link v-else-if="link" :to="link">
-      <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
-    </router-link>
-    <span v-else>
-      <!-- @slot Content placeholder for further customization, guess the resource text by default. -->
-      <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
+    <span v-if="value">
+      <v-progress-linear indeterminate v-if="loading"></v-progress-linear>
+      <v-chip v-else-if="chip" :color="getColor(value)" :small="small" :to="link">
+        <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
+      </v-chip>
+      <router-link v-else-if="link" :to="link">
+        <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
+      </router-link>
+      <span v-else>
+        <!-- @slot Content placeholder for further customization, guess the resource text by default. -->
+        <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
+      </span>
     </span>
-  </span>
 </template>
 
 <script>
@@ -32,6 +32,10 @@ export default {
      * Allow resource auto fetching from source.
      */
     fetch: Boolean,
+    /**
+     * Display the value of the lookup value (the "id") as a suffix. Example: "Companyname (company_id)"
+     */
+    displayIdValue: String,
   },
   data: () => {
     return {
@@ -41,9 +45,7 @@ export default {
   },
   computed: {
     getId() {
-      return this.referenceItem
-        ? this.referenceItem[this.itemValue]
-        : this.value;
+      return this.referenceItem ? this.referenceItem[this.itemValue] : this.value;
     },
     link() {
       let resource = this.$admin.getResource(this.reference);
@@ -72,10 +74,18 @@ export default {
       }
       if (Array.isArray(this.referenceItem)) {
         let returnValue = [];
-        this.referenceItem.forEach(item => {
-          returnValue.push(item[text] || item);
+        this.referenceItem.forEach((item) => {
+          if (typeof item === "object") {
+            if (this.displayIdValue) {
+              returnValue.push(item[text] + " (" + item[this.displayIdValue] + ")");
+            } else {
+              returnValue.push(item[text]);
+            }
+          } else {
+            returnValue.push(item);
+          }
         });
-        return returnValue.join(', ');
+        return returnValue.join(", ");
       }
 
       return this.referenceItem[text] || this.referenceItem;
@@ -95,10 +105,7 @@ export default {
         if (this.fetch && newVal) {
           this.loading = true;
           try {
-            let { data } = await this.$store.dispatch(
-              `${this.reference}/getOne`,
-              { id: newVal }
-            );
+            let { data } = await this.$store.dispatch(`${this.reference}/getOne`, { id: newVal });
             this.referenceItem = data;
           } catch (e) {
             this.referenceItem = null;
@@ -107,8 +114,8 @@ export default {
           this.loading = false;
         }
       },
-      immediate: true,
-    },
-  },
+      immediate: true
+    }
+  }
 };
 </script>
