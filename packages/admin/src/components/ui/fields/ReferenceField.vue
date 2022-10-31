@@ -75,7 +75,7 @@ export default {
       if (Array.isArray(this.referenceItem)) {
         let returnValue = [];
         this.referenceItem.forEach((item) => {
-          if (typeof item === "object") {
+          if (item !== null && typeof item === "object") {
             if (this.displayIdValue) {
               returnValue.push(item[text] + " (" + item[this.displayIdValue] + ")");
             } else {
