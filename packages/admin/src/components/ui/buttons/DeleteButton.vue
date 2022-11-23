@@ -25,6 +25,8 @@ export default {
      * Default redirect active if current page is resource being deleted.
      */
     redirect: Boolean,
+    overrideDeleteTitle: String,
+    overrideDeleteMessage: String,
   },
   methods: {
     async onDelete() {
@@ -39,11 +41,11 @@ export default {
 
       if (
         await this.$admin.confirm(
-          this.$t("va.confirm.delete_title", {
+          this.$t(this.deleteTitle, {
             resource: this.currentResource.singularName.toLowerCase(),
             id: this.item[this.currentResource.label],
           }),
-          this.$t("va.confirm.delete_message", {
+          this.$t(this.deleteMessage, {
             resource: this.currentResource.singularName.toLowerCase(),
             id: this.item[this.currentResource.label],
           })
@@ -64,6 +66,22 @@ export default {
          * Triggered on successful deletion of resource item.
          */
         this.$emit("deleted");
+      }
+    },
+  },
+  computed: {
+    deleteTitle() {
+      if (this.overrideDeleteTitle) {
+        return this.overrideDeleteTitle;
+      } else {
+        return 'va.confirm.delete_title'
+      }
+    },
+    deleteMessage() {
+      if (this.overrideDeleteMessage) {
+        return this.overrideDeleteMessage;
+      } else {
+        return "va.confirm.delete_message";
       }
     },
   },

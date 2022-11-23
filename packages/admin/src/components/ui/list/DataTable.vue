@@ -202,6 +202,8 @@
                 :item="item"
                 icon
                 @deleted="$emit('deleted', item)"
+                :override-delete-title="overrideDeleteTitle"
+                :override-delete-message="overrideDeleteMessage"
               ></va-delete-button>
             </template>
           </slot>
@@ -314,6 +316,8 @@ export default {
      * Disable delete action row.
      */
     disableDelete: Boolean,
+    overrideDeleteTitle: String,
+    overrideDeleteMessage: String,
     /**
      * Disable actions column.
      */
@@ -420,8 +424,8 @@ export default {
         .map((f) => {
           return typeof f === "string"
             ? {
-                source: f,
-              }
+              source: f,
+            }
             : f;
         })
         .map((f) => {
@@ -533,12 +537,12 @@ export default {
       try {
         this.editRowId
           ? await this.$store.dispatch(`${this.listState.resource}/update`, {
-              id: this.editRowId,
-              data: { ...this.form, ...this.updateData },
-            })
+            id: this.editRowId,
+            data: { ...this.form, ...this.updateData },
+          })
           : await this.$store.dispatch(`${this.listState.resource}/create`, {
-              data: { ...this.form, ...this.createData },
-            });
+            data: { ...this.form, ...this.createData },
+          });
 
         this.editRowId = null;
         this.form = null;
