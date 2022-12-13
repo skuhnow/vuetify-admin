@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     label() {
-      return this.value ? this.labelTrue : this.labelFalse;
+      return this.$t(this.value ? this.labelTrue : this.labelFalse);
     },
     hasLabel() {
       return !!this.label;
