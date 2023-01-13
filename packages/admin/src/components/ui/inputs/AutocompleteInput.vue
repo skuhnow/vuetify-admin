@@ -1,8 +1,9 @@
 <template>
   <component
     :is="taggable ? 'v-combobox' : 'v-autocomplete'"
-    :readonly="disabled"
-    :class="{ 'v-input--is-disabled': disabled }"
+    :disabled="disabled"
+    :readonly="readonly"
+    :class="{ 'v-input--is-disabled': readonly }"
     v-bind="commonProps"
     :filled="filled"
     :multiple="multiple"

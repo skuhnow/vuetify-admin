@@ -1,8 +1,9 @@
 <template>
   <v-select
     v-bind="commonProps"
-    :readonly="disabled"
-    :class="{ 'v-input--is-disabled': disabled }"
+    :disabled="disabled"
+    :readonly="readonly"
+    :class="{ 'v-input--is-disabled': readonly }"
     :filled="filled"
     :multiple="multiple"
     :chips="chips"

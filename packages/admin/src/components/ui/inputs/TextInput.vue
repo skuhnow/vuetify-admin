@@ -5,8 +5,9 @@
     auto-grow
     :autofocus="autofocus"
     :filled="filled"
-    :readonly="disabled"
-    :class="{ 'v-input--is-disabled': disabled }"
+    :disabled="disabled"
+    :readonly="readonly"
+    :class="{ 'v-input--is-disabled': readonly }"
     @change="change"
     @input="update"
     persistent-hint
@@ -16,8 +17,9 @@
     v-bind="commonProps"
     :autofocus="autofocus"
     :filled="filled"
-    :readonly="disabled"
-    :class="{ 'v-input--is-disabled': disabled }"
+    :disabled="disabled"
+    :readonly="readonly"
+    :class="{ 'v-input--is-disabled': readonly }"
     @change="change"
     @input="update"
     :type="type"
