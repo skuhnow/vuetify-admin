@@ -111,7 +111,7 @@ export default {
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.currentChoices = await this.fetchCurrentChoices(this.multiple ? value : [value]);
+        this.currentChoices = await this.fetchCurrentChoices(this.multiple ? [value] : value);
         await this.loadList(null);
       }
     },
