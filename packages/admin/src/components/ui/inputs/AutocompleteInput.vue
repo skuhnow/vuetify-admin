@@ -18,7 +18,6 @@
     :search-input.sync="search"
     @change="change"
     @input="onInput"
-    @blur="onBlur"
     persistent-hint
     :filter="filterCallback"
   >
@@ -91,9 +90,7 @@ export default {
   },
   data() {
     return {
-      currentChoices: [],
       search: null,
-      initialSearchComplete: false,
     };
   },
   created() {
@@ -111,8 +108,8 @@ export default {
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.currentChoices = await this.fetchCurrentChoices(this.multiple ? [value] : value);
-        await this.loadList(null);
+        this.items = await this.fetchCurrentChoices(value);
+        await this.loadList();
       }
     },
     async loadList(val = null) {
@@ -123,15 +120,15 @@ export default {
 
         this.items = [
           ...[empty],
-          ...(this.currentChoices || []),
+          ...(this.items || []),
           ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
         ];
         return;
       }
 
       this.items = [
-        ...(this.currentChoices || []),
-        ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+        ...(this.items || []),
+        ...((await this.fetchChoices(val, this.itemsPerPage)) || [])
       ];
     },
     resetList() {
@@ -140,9 +137,6 @@ export default {
     onInput(value) {
       this.update(value);
       this.search = "";
-    },
-    onBlur() {
-      this.loadList();
     },
   },
   watch: {
@@ -155,11 +149,7 @@ export default {
       },
       immediate: true,
     },
-    async search(val, old) {
-      if (this.initialSearchComplete == false) {
-        this.initialSearchComplete = true;
-        return;
-      }
+    async search(val) {
       if (!val || val.length < this.minChars) {
         return;
       }
