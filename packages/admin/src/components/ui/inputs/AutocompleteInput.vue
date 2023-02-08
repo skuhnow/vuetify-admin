@@ -21,13 +21,15 @@
     persistent-hint
     :filter="filterCallback"
   >
-    <template v-slot:selection="data" v-if="$scopedSlots.selection">
+    <template v-slot:selection="data" v-if="$scopedSlots.selection || renderCallback">
       <!-- @slot Define a custom selection appearance -->
-      <slot name="selection" v-bind="data"></slot>
+      <span v-if="renderCallback">{{ renderCallback(data.item) }}</span>
+      <slot v-else name="selection" v-bind="data"></slot>
     </template>
-    <template v-slot:item="data" v-if="$scopedSlots.item">
+    <template v-slot:item="data" v-if="$scopedSlots.item || renderCallback">
       <!-- @slot Define a custom item appearance -->
-      <slot name="item" v-bind="data"></slot>
+      <span v-if="renderCallback">{{ renderCallback(data.item) }}</span>
+      <slot v-else name="item" v-bind="data"></slot>
     </template>
   </component>
 </template>
@@ -74,6 +76,10 @@ export default {
       default() {
         return get(this.$admin.options, "autoComplete.itemsPerPage") || 50;
       },
+    },
+    renderCallback: {
+      type: Function,
+      default: null,
     },
     autofocus: {
       type: Boolean,
