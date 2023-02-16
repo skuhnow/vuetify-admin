@@ -6,6 +6,7 @@
       :key="i"
       :item="item"
       :color="color"
+      :class="{comma : action === null}"
       chip
       :small="small"
       :action="action"
@@ -37,3 +38,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.comma:not(:first-child):before {
+  content: ", ";
+}
+</style>
