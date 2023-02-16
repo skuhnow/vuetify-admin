@@ -1,7 +1,7 @@
 <template>
     <span v-if="value">
       <v-progress-linear indeterminate v-if="loading"></v-progress-linear>
-      <v-chip v-else-if="chip" :color="getColor(value)" :small="small" :to="link">
+      <v-chip v-else-if="chip && link" :color="getColor(value)" :small="small" :to="link">
         <slot :value="value" :item="referenceItem">{{ getItemText }}</slot>
       </v-chip>
       <router-link v-else-if="link" :to="link">
