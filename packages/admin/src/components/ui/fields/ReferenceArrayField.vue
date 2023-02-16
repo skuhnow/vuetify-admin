@@ -9,6 +9,7 @@
       chip
       :small="small"
       :action="action"
+      :actionReference="actionReference"
       :itemText="itemText"
       :itemValue="itemValue"
     >
@@ -32,6 +33,7 @@ export default {
      * Show list of chips as column.
      */
     column: Boolean,
+    actionReference: String,
   },
 };
 </script>

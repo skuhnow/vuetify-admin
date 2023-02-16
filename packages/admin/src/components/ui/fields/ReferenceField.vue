@@ -36,6 +36,10 @@ export default {
      * Display the value of the lookup value (the "id") as a suffix. Example: "Companyname (company_id)"
      */
     displayIdValue: String,
+    /**
+     * Optional reference for the link
+     */
+    actionReference: String,
   },
   data: () => {
     return {
@@ -48,11 +52,11 @@ export default {
       return this.referenceItem ? this.referenceItem[this.itemValue] : this.value;
     },
     link() {
-      let resource = this.$admin.getResource(this.reference);
+      let resource = this.$admin.getResource(this.resolvedReference);
 
       if (resource.routes.includes(this.action)) {
         return {
-          name: `${this.reference}_${this.action}`,
+          name: `${this.resolvedReference}_${this.action}`,
           params: {
             id: this.getId,
           },
@@ -89,6 +93,9 @@ export default {
       }
 
       return this.referenceItem[text] || this.referenceItem;
+    },
+    resolvedReference() {
+      return this.actionReference ? this.actionReference : this.reference;
     },
   },
   watch: {
