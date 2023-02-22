@@ -14,11 +14,9 @@
       :single-expand="singleExpand"
       :show-expand="showExpand"
       @click:row="onRowClick"
-      :items-per-page="listState.options.itemsPerPage"
-      :sort-by.sync="listState.options.sortBy"
-      :sort-desc.sync="listState.options.sortDesc"
+      :server-items-length="listState.total"
+      :options.sync="listState.options"
       @input="(s) => (listState.selected = s)"
-      @update:sort-desc="reloadListOnSort"
       :class="{ 'clickable-rows': rowClick || !!$listeners['row-click'] }"
     >
       <template
@@ -451,10 +449,6 @@ export default {
     },
   },
   methods: {
-    reloadListOnSort() {
-      this.listState.options.page = 1;
-      this.listState.reload();
-    },
     getDefaultAlign(field) {
       if (["number"].includes(field.type)) {
         return "right";

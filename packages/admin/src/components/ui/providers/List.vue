@@ -13,6 +13,7 @@
       disableItemsPerPage,
     }"
     @update:items-per-page="itemsPerPageUpdated"
+    @update:sort-desc="listState.reload"
     @update:page="listState.reload"
   >
     <template v-slot:header v-if="!hideHeader">
@@ -73,8 +74,8 @@
             >
               <v-icon small>mdi-filter-variant-plus</v-icon>
               <span v-if="$vuetify.breakpoint.lgAndUp" class="ml-2">{{
-                $t("va.datatable.add_filter")
-              }}</span>
+                  $t("va.datatable.add_filter")
+                }}</span>
             </v-btn>
           </template>
           <v-list>
@@ -343,8 +344,8 @@ export default {
         .map((f) => {
           return typeof f === "string"
             ? {
-                source: f,
-              }
+              source: f,
+            }
             : f;
         })
         .map((f) => {
@@ -434,7 +435,7 @@ export default {
           (defaultFilterField) =>
             (this.currentFilter[defaultFilterField] = this.getDefaultFilter()[
               defaultFilterField
-            ])
+              ])
         );
       }
 
