@@ -159,8 +159,9 @@
                 @click="(item) => onAction('show', item)"
               ></va-show-button>
               <va-edit-button
-                v-if="!disableEdit && (!canEdit || (typeof canEdit === 'function' && canEdit(item)))"
+                v-if="!disableEdit"
                 :disable-redirect="disableEditRedirect || rowEdit"
+                :disabled="canEdit === false || (typeof canEdit === 'function' && canEdit(item) === false)"
                 :resource="listState.resource"
                 :item="item"
                 icon
@@ -195,9 +196,10 @@
                 @event deleted
               -->
               <va-delete-button
-                v-if="!disableDelete && (!canDelete || (typeof canDelete === 'function' && canDelete(item)))"
+                v-if="!disableDelete"
                 :resource="listState.resource"
                 :item="item"
+                :disabled="canDelete === false || (typeof canDelete === 'function' && canDelete(item) === false)"
                 icon
                 @deleted="$emit('deleted', item)"
                 :override-delete-title="overrideDeleteTitle"

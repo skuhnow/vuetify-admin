@@ -6,19 +6,21 @@
     icon="mdi-trash-can"
     :color="color || 'red'"
     text
+    :disabled="disabled"
     @click="onDelete"
   ></va-action-button>
 </template>
 
 <script>
 import Button from "../../../mixins/button";
+import Disabled from "../../../mixins/disabled.js";
 
 /**
  * Button for all delete resource action. Comes with confirm dialog.
  * Auto hide if no delete action available unless show prop is active.
  */
 export default {
-  mixins: [Button],
+  mixins: [Button, Disabled],
   props: {
     /**
      * Redirect to resource list after successful deletion.

@@ -7,6 +7,7 @@
     :color="color || 'blue'"
     text
     exact
+    :disabled="disabled"
     :to="getRoute('edit', { params: { id: item.id } })"
     @click="onClick"
   ></va-action-button>
@@ -14,11 +15,12 @@
 
 <script>
 import RedirectButton from "../../../mixins/redirect-button";
+import Disabled from "../../../mixins/disabled.js";
 
 /**
  * Button for all edit resource action. Redirect to edit page by default.
  */
 export default {
-  mixins: [RedirectButton],
+  mixins: [RedirectButton,Disabled],
 };
 </script>
