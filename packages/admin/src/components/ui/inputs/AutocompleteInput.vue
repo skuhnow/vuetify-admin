@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     filterCallback(item, queryText, itemText) {
-      if (this.reference && this.fetchedItems.length) {
+      if (this.reference && this.fetchedItems && this.fetchedItems.length) {
         const itemJson = JSON.stringify(item);
         return this.fetchedItems.filter(fetchedItem => JSON.stringify(fetchedItem) === itemJson).length > 0;
       }
