@@ -54,6 +54,7 @@ import BooleanInput from "./inputs/BooleanInput";
 import RichTextInput from "./inputs/RichTextInput";
 import ArrayInput from "./inputs/ArrayInput";
 import SelectInput from "./inputs/SelectInput";
+import ComboboxInput from "./inputs/ComboboxInput";
 import RadioGroupInput from "./inputs/RadioGroupInput";
 import AutocompleteInput from "./inputs/AutocompleteInput";
 import FileInput from "./inputs/FileInput";
@@ -109,6 +110,7 @@ export {
   RichTextInput,
   ArrayInput,
   SelectInput,
+  ComboboxInput,
   RadioGroupInput,
   AutocompleteInput,
   FileInput,
