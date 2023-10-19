@@ -19,7 +19,7 @@ export default {
      */
     action: {
       type: String,
-      validator: (v) => ["show", "edit"].includes(v),
+      validator: (v) => ["list", "show", "edit"].includes(v),
       default: "show",
     },
     /**
