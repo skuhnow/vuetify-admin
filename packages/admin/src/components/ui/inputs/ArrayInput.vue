@@ -21,7 +21,7 @@
           :index="i"
         ></slot>
         <div class="d-flex">
-          <v-tooltip bottom>
+          <v-tooltip bottom v-if="!hideMover">
             <template v-slot:activator="{ on }">
               <v-btn outlined icon text v-on="on" class="handle">
                 <v-icon small>mdi-cursor-move</v-icon>
@@ -61,6 +61,10 @@ export default {
     value: {
       type: Array,
       default: () => [],
+    },
+    hideMover: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
