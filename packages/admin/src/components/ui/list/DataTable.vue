@@ -408,6 +408,7 @@ export default {
             sortable: field.sortable,
             align: field.align || this.getDefaultAlign(field),
             width: field.width,
+            cellClass: field.cellClass,
           };
         });
 
