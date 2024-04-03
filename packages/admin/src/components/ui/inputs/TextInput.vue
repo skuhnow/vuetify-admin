@@ -24,6 +24,8 @@
     @input="update"
     :type="type"
     persistent-hint
+    :prefix="prefix"
+    :suffix="suffix"
     :append-icon="showCopyPaste ? 'mdi-content-copy' : ''"
     @click:append="copyToClipboard()"
   >
@@ -61,6 +63,14 @@ export default {
     type: {
       type: String,
       default: "text",
+    },
+    prefix: {
+      type: String,
+      default: null,
+    },
+    suffix: {
+      type: String,
+      default: null,
     },
     /**
      * Transform text input into textarea.
