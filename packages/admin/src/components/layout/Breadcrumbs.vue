@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style>
-.v-breadcrumbs {
+.theme--light .v-breadcrumbs {
   background-color: #fff;
 }
 </style>

@@ -7,7 +7,6 @@
     :clipped="$vuetify.breakpoint.lgAndUp"
     app
     :dark="dark"
-    :color="color"
     :mini-variant="miniVariant"
     :value="value"
     @input="(v) => $emit('input', v)"

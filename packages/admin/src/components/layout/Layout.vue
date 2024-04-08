@@ -42,7 +42,7 @@ export default {};
 </script>
 
 <style>
-.v-main {
+.theme--light .v-main {
   background-color: #fafafa;
 }
 
