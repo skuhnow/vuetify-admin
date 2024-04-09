@@ -61,6 +61,14 @@
         </v-list>
       </v-menu>
       <v-btn
+        v-if="darkModeSwitcher"
+        icon
+        small
+        class="ml-5"
+        @click="toggleDarkmode()"
+        ><v-icon>{{ darkmodeSwitcherIcon }}</v-icon></v-btn
+      >
+      <v-btn
         v-if="!disableReload"
         icon
         small
@@ -172,6 +180,18 @@ export default {
      * Apply dark theme variant for VAppBar
      */
     dark: Boolean,
+    /**
+     * Apply dark theme variant for VAppBar
+     */
+    darkModeSwitcher: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      darkMode: false,
+    };
   },
   computed: {
     createResourceLinks() {
@@ -190,6 +210,16 @@ export default {
     getEmail() {
       return this.$store.getters["auth/getEmail"];
     },
+    darkmodeSwitcherIcon() {
+      return this.darkMode ? "mdi-weather-sunny" : "mdi-weather-night";
+    },
+  },
+  created() {
+    this.setDarkmode(
+      this.darkModeSwitcher
+        ? localStorage.getItem("darkMode") === "true"
+        : false
+    );
   },
   methods: {
     refresh() {
@@ -197,6 +227,14 @@ export default {
     },
     logout() {
       this.$store.dispatch("auth/logout");
+    },
+    toggleDarkmode() {
+      this.setDarkmode(!this.darkMode);
+    },
+    setDarkmode(value) {
+      this.darkMode = value;
+      localStorage.setItem("darkMode", this.darkMode);
+      this.$vuetify.theme.dark = this.darkMode;
     },
   },
 };
