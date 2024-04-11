@@ -21,7 +21,10 @@
     persistent-hint
     :filter="filterCallback"
   >
-    <template v-slot:selection="data" v-if="$scopedSlots.selection || renderCallback">
+    <template
+      v-slot:selection="data"
+      v-if="$scopedSlots.selection || renderCallback"
+    >
       <!-- @slot Define a custom selection appearance -->
       <span v-if="renderCallback">{{ renderCallback(data.item) }}</span>
       <slot v-else name="selection" v-bind="data"></slot>
@@ -91,7 +94,11 @@ export default {
     },
     emptyOptionText: {
       type: String,
-      default: 'Empty',
+      default: "Empty",
+    },
+    filterMode: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -108,9 +115,15 @@ export default {
     filterCallback(item, queryText, itemText) {
       if (this.reference && this.fetchedItems && this.fetchedItems.length) {
         const itemJson = JSON.stringify(item);
-        return this.fetchedItems.filter(fetchedItem => JSON.stringify(fetchedItem) === itemJson).length > 0;
+        return (
+          this.fetchedItems.filter(
+            (fetchedItem) => JSON.stringify(fetchedItem) === itemJson
+          ).length > 0
+        );
       }
-      return itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1;
+      return (
+        itemText.toLocaleLowerCase().indexOf(queryText.toLocaleLowerCase()) > -1
+      );
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
@@ -122,20 +135,30 @@ export default {
       if (this.emptyOption) {
         let empty = {};
         empty[this.getItemText] = this.emptyOptionText;
-        empty[this.getItemValue] = '~empty~';
+        empty[this.getItemValue] = "~empty~";
 
+        if (this.filterMode) {
+          this.items = [
+            ...[empty],
+            ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+          ];
+        } else {
+          this.items = [
+            ...[empty],
+            ...(this.items || []),
+            ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+          ];
+        }
+        return;
+      }
+      if (this.filterMode) {
+        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || [];
+      } else {
         this.items = [
-          ...[empty],
           ...(this.items || []),
           ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
         ];
-        return;
       }
-
-      this.items = [
-        ...(this.items || []),
-        ...((await this.fetchChoices(val, this.itemsPerPage)) || [])
-      ];
     },
     resetList() {
       this.items = [];
