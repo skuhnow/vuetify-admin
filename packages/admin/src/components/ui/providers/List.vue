@@ -17,7 +17,11 @@
     @update:page="listState.reload"
   >
     <template v-slot:header v-if="!hideHeader">
-      <v-toolbar flat color="blue lighten-5" v-if="listState.selected.length">
+      <v-toolbar
+        flat
+        :color="$vuetify.theme.dark ? 'green darken-2' : 'blue lighten-5'"
+        v-if="listState.selected.length"
+      >
         {{ $tc("va.datatable.selected_items", listState.selected.length) }}
         <v-spacer></v-spacer>
         <div>
@@ -58,7 +62,12 @@
           </template>
         </form-filter>
         <v-spacer></v-spacer>
-        <v-btn v-if="hasLocalStorageFilter()" text color="success" @click="resetFilter">
+        <v-btn
+          v-if="hasLocalStorageFilter()"
+          text
+          color="success"
+          @click="resetFilter"
+        >
           <v-icon small>mdi-filter-off</v-icon>
           <span class="ml-2">
             {{ $t("va.datatable.reset_filter") }}
@@ -74,8 +83,8 @@
             >
               <v-icon small>mdi-filter-variant-plus</v-icon>
               <span v-if="$vuetify.breakpoint.lgAndUp" class="ml-2">{{
-                  $t("va.datatable.add_filter")
-                }}</span>
+                $t("va.datatable.add_filter")
+              }}</span>
             </v-btn>
           </template>
           <v-list>
@@ -249,7 +258,9 @@ export default {
     disablePersistentFilter: {
       type: Boolean,
       default() {
-        return get(this.$admin.options, "list.disablePersistentFilter") || false;
+        return (
+          get(this.$admin.options, "list.disablePersistentFilter") || false
+        );
       },
     },
     /**
@@ -344,8 +355,8 @@ export default {
         .map((f) => {
           return typeof f === "string"
             ? {
-              source: f,
-            }
+                source: f,
+              }
             : f;
         })
         .map((f) => {
@@ -409,16 +420,25 @@ export default {
   },
   methods: {
     itemsPerPageUpdated() {
-      localStorage.setItem("itemsPerPage_" + this.resource, this.listState.options.itemsPerPage);
+      localStorage.setItem(
+        "itemsPerPage_" + this.resource,
+        this.listState.options.itemsPerPage
+      );
       this.listState.reload();
     },
     hasLocalStorageFilter() {
-      const localStorageFilterStr = localStorage.getItem("filter_" + this.resource);
+      const localStorageFilterStr = localStorage.getItem(
+        "filter_" + this.resource
+      );
       if (localStorageFilterStr) {
         const localStorageFilter = JSON.parse(localStorageFilterStr);
-        return localStorageFilter && localStorageFilter.constructor === Object && Object.keys(localStorageFilter)
-          .filter(filterKey => filterKey.charAt(0) !== "_")
-          .length > 0;
+        return (
+          localStorageFilter &&
+          localStorageFilter.constructor === Object &&
+          Object.keys(localStorageFilter).filter(
+            (filterKey) => filterKey.charAt(0) !== "_"
+          ).length > 0
+        );
       }
       return false;
     },
@@ -435,11 +455,14 @@ export default {
           (defaultFilterField) =>
             (this.currentFilter[defaultFilterField] = this.getDefaultFilter()[
               defaultFilterField
-              ])
+            ])
         );
       }
 
-      localStorage.setItem("filter_" + this.resource, JSON.stringify(this.currentFilter));
+      localStorage.setItem(
+        "filter_" + this.resource,
+        JSON.stringify(this.currentFilter)
+      );
       this.listState.reload();
     },
     getDefaultFilter() {
@@ -469,7 +492,9 @@ export default {
         filterFromQueryOrStorage = filter;
       } else if (!this.disablePersistentFilter) {
         if (this.hasLocalStorageFilter()) {
-          filterFromQueryOrStorage = localStorage.getItem("filter_" + this.resource);
+          filterFromQueryOrStorage = localStorage.getItem(
+            "filter_" + this.resource
+          );
         }
       }
 
@@ -477,7 +502,9 @@ export default {
         options.page = parseInt(page, 10);
       }
 
-      const localStorageItemsPerPage = localStorage.getItem("itemsPerPage_" + this.resource);
+      const localStorageItemsPerPage = localStorage.getItem(
+        "itemsPerPage_" + this.resource
+      );
       const resolvedPerPage = localStorageItemsPerPage ?? perPage;
       if (resolvedPerPage) {
         options.itemsPerPage = parseInt(resolvedPerPage, 10);
@@ -488,7 +515,7 @@ export default {
       }
 
       if (sortDesc) {
-        options.sortDesc = sortDesc.split(",").map(bool => bool === "true");
+        options.sortDesc = sortDesc.split(",").map((bool) => bool === "true");
       }
 
       this.listState.options = options;
@@ -497,7 +524,10 @@ export default {
        * Enable active filters from query
        */
       if (filterFromQueryOrStorage) {
-        localStorage.setItem("filter_" + this.resource, filterFromQueryOrStorage)
+        localStorage.setItem(
+          "filter_" + this.resource,
+          filterFromQueryOrStorage
+        );
         this.currentFilter = JSON.parse(filterFromQueryOrStorage);
 
         for (let prop in this.currentFilter) {

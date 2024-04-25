@@ -2,6 +2,7 @@
   <va-delete-button
     :resource="listState.resource"
     @delete="onBulkDelete"
+    :text="false"
   ></va-delete-button>
 </template>
 

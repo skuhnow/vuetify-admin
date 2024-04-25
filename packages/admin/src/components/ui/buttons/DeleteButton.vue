@@ -5,7 +5,7 @@
     :label="$t('va.actions.delete')"
     icon="mdi-trash-can"
     :color="color || 'red'"
-    text
+    :text="text"
     :disabled="disabled"
     @click="onDelete"
   ></va-action-button>
@@ -29,6 +29,10 @@ export default {
     redirect: Boolean,
     overrideDeleteTitle: String,
     overrideDeleteMessage: String,
+    text: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     async onDelete() {
@@ -76,7 +80,7 @@ export default {
       if (this.overrideDeleteTitle) {
         return this.overrideDeleteTitle;
       } else {
-        return 'va.confirm.delete_title'
+        return "va.confirm.delete_title";
       }
     },
     deleteMessage() {
