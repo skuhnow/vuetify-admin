@@ -96,14 +96,11 @@ export default {
       type: String,
       default: "Empty",
     },
-    filterMode: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {
       search: null,
+      presetItems: [],
     };
   },
   created() {
@@ -127,7 +124,7 @@ export default {
     },
     async loadCurrentChoices(value) {
       if (this.reference && value) {
-        this.items = await this.fetchCurrentChoices(value);
+        this.presetItems = await this.fetchCurrentChoices(value);
         await this.loadList();
       }
     },
@@ -136,32 +133,21 @@ export default {
         let empty = {};
         empty[this.getItemText] = this.emptyOptionText;
         empty[this.getItemValue] = "~empty~";
-
-        if (this.filterMode) {
-          this.items = [
-            ...[empty],
-            ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
-          ];
-        } else {
-          this.items = [
-            ...[empty],
-            ...(this.items || []),
-            ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
-          ];
-        }
-        return;
-      }
-      if (this.filterMode) {
-        this.items = (await this.fetchChoices(val, this.itemsPerPage)) || [];
-      } else {
         this.items = [
-          ...(this.items || []),
+          ...[empty],
+          ...(this.presetItems || []),
           ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
         ];
+        return;
       }
+      this.items = [
+        ...(this.presetItems || []),
+        ...((await this.fetchChoices(val, this.itemsPerPage)) || []),
+      ];
     },
     resetList() {
       this.items = [];
+      this.presetItems = [];
     },
     onInput(value) {
       this.update(value);
